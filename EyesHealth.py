@@ -60,7 +60,9 @@ def send():
 
 
 if __name__ == "__main__":
+    bot = telegram.Bot('1800511746:AAFW0CUXSEaiFsxSUgYhWqOQ8fwTJeehpnU')
 
+    date_start = datetime.now()
 
     root = Tk()
     root.title("EyesHealth")
@@ -108,7 +110,7 @@ if __name__ == "__main__":
 
 
     def pause_toggle():
-        bot = telegram.Bot('1800511746:AAFW0CUXSEaiFsxSUgYhWqOQ8fwTJeehpnU')
+
 
         if pause_toggle.paused:
             pause_button['text'] = 'Pause'
@@ -118,7 +120,7 @@ if __name__ == "__main__":
             final_hours = 0
             final_minutes = 0
             final_seconds = 0
-            while time_remain != 0:
+            while time_remain <= 0:
                 if time_remain >= 3600:
                     final_hours += 1
                     time_remain -= 3600
@@ -138,7 +140,7 @@ if __name__ == "__main__":
             pause_button['text'] = 'Start'
             pause_toggle.pause_start = datetime.now()
             bot.send_message(chat_id='-1001523285912',
-                             text="User stopped working... {} - time of pauses, {} - pauses have been made".format(timer.get(), number_of_pauses))
+                             text="User stopped working... {} - time of pauses, {} - pauses have been made".format(pause_timer.get(), number_of_pauses))
         pause_toggle.paused = not pause_toggle.paused
 
 
@@ -168,7 +170,15 @@ if __name__ == "__main__":
 
 
     def on_closing():
+        date_end = datetime.now()
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            if timedelta(hours=3) - (date_end - date_start) < timedelta(0):
+                bot.send_message(chat_id='-1001523285912',
+                                 text="User stopped working and finished the program... time is up, {} - time of pauses, {} - pauses have been made".format(pause_timer.get(), number_of_pauses))
+            else:
+                bot.send_message(chat_id='-1001523285912',
+                                 text="User stopped working and finished the program... {} of time remaining, {} - time of pauses, {} - pauses have been made".format(timedelta(hours=3) - (date_end - date_start),
+                                     pause_timer.get(), number_of_pauses))
             root.destroy()
 
 
