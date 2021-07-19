@@ -54,7 +54,7 @@ def saving_video():
 def send():
     bot = telegram.Bot('1800511746:AAFW0CUXSEaiFsxSUgYhWqOQ8fwTJeehpnU')
 
-    bot.send_message(chat_id='-1001523285912', text="User turned on pc and made gym for eyes in {}, 3 hours of learning left (in {} end)".format(datetime.now(), datetime.now() + timedelta(hours=3)))
+    bot.send_message(chat_id='-1001523285912', text="User turned on pc and made gym for eyes in {}, 4 hours of learning left (in {} end)".format(datetime.now(), datetime.now() + timedelta(hours=3)))
     bot.send_video(chat_id='-1001523285912', video=open('output.avi', 'rb'), timeout=1000000)
 
 
@@ -88,7 +88,7 @@ def pause_toggle():
         pause_button['text'] = 'Pause'
         pause_timer.pause_time += datetime.now() - pause_toggle.pause_start
         seconds = int(pause_timer.get()[0])*3600 + int(pause_timer.get()[2]+pause_timer.get()[3])*60 + int(pause_timer.get()[5]+pause_timer.get()[6])
-        time_remain = threehours - seconds
+        time_remain = fourhours - seconds
         final_hours = 0
         final_minutes = 0
         final_seconds = 0
@@ -125,12 +125,12 @@ def make_label(text):
 def on_closing():
     date_end = datetime.now()
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
-        if timedelta(hours=3) - (date_end - date_start) < timedelta(0):
+        if timedelta(hours=4) - (date_end - date_start) < timedelta(0):
             bot.send_message(chat_id='-1001523285912',
                              text="User stopped working and finished the program... time is up, {} - time of pauses, {} - pauses have been made".format(pause_timer.get(), number_of_pauses))
         else:
             bot.send_message(chat_id='-1001523285912',
-                             text="User stopped working and finished the program... {} of time remaining, {} - time of pauses, {} - pauses have been made".format(timedelta(hours=3) - (date_end - date_start),
+                             text="User stopped working and finished the program... {} of time remaining, {} - time of pauses, {} - pauses have been made".format(timedelta(hours=4) - (date_end - date_start),
                                  pause_timer.get(), number_of_pauses))
         root.destroy()
 
@@ -147,7 +147,7 @@ if __name__ == "__main__":
     root.title("EyesHealth")
     root.geometry("500x400")
 
-    threehours = 3600*3
+    fourhours = 3600*4
     number_of_pauses = 0
 
     pause_toggle.paused = False
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     stop_button = tk.Button(root, text="Send video", command=send, height=3, width=20).pack()
     info_button = tk.Button(root, text="Info", command=info_msg, height=3, width=20).pack()
 
-    patch_v = tk.Label(root, text="patch 0.165", font=("Helvetica", 12, "bold"))
+    patch_v = tk.Label(root, text="patch 0.17", font=("Helvetica", 12, "bold"))
     patch_v.place(x=410, y=370)
 
 
